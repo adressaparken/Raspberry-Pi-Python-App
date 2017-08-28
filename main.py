@@ -19,7 +19,7 @@ from envirophat import light, weather
 ##------------------------------------------------------------------------// Globals
 
 # Set debug level
-set_debug( True )
+set_debug( False )
 
 settings = SettingsHandler( "settings" )
 
