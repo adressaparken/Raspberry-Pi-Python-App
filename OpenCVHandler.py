@@ -30,13 +30,6 @@ class OpenCVHandler(threading.Thread):
 
         self.num_detected = 0
 
-    # def detect_people( self, frame ):
-    # 	(rects, weights) = hog.detectMultiScale( frame, winStride=(8, 8), padding=(16, 16), scale=1.06 )
-    # 	rects = non_max_suppression( rects, probs=None, overlapThresh=0.65 )
-    # 	for (x, y, w, h) in rects:
-    # 		cv2.rectangle( frame, (x, y), (x + w, y + h), (0, 0, 255), 2 )
-    #     return (frame, len(rects))
-
     def background_subtraction( self, previous_frame, frame, min_area):
         frameDelta = cv2.absdiff( previous_frame, frame )
         thresh = cv2.threshold( frameDelta, 25, 255, cv2.THRESH_BINARY )[1]
@@ -57,7 +50,7 @@ class OpenCVHandler(threading.Thread):
 
         for frame in self.camera.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
             image = frame.array
-            image = imutils.resize( image, width=min(640, image.shape[1] ))
+            # image = imutils.resize( image, width=min(400, image.shape[1] ))
             image_grayscale = cv2.cvtColor( image, cv2.COLOR_BGR2GRAY )
 
             # detect people in the image
@@ -115,7 +108,7 @@ if __name__ == '__main__':
     signal.signal( signal.SIGINT , signal_handler )
 
     # init stuff
-    opencv = OpenCVHandler( 640, 480, 32 )
+    opencv = OpenCVHandler( 640, 480, 10 )
     opencv.start()
 
     # main program loop
