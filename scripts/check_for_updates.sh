@@ -18,22 +18,7 @@ while true; do
         sh $SCRIPT_DIR/kill_native.sh
     fi
     echo "-----------------------------------"
-    read -t 10 -p "Restarting the update app in 10 seconds. Press <CTRL>+c to stop."
+    read -t 20 -p "Restarting the update app in 20 seconds. Press <CTRL>+c to stop."
     echo "-----------------------------------"
 
-done 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+done

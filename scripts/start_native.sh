@@ -14,7 +14,7 @@ while true; do
     python $ROOT_DIR/$NATIVE_APP.py
     echo "Main app ended..."
     echo "-----------------------------------"
-    read -t 2 -p "Restarting the native app in 2 seconds. Press <CTRL>+c to stop."
+    read -t 10 -p "Restarting the native app in 10 seconds. Press <CTRL>+c to stop."
     echo "-----------------------------------"
 
 done
