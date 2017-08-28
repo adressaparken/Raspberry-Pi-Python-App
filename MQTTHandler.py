@@ -9,6 +9,7 @@ import time
 from multiprocessing import Queue
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as mqtt_publish
+from my_logging import *
 
 class MQTTHandler():
 
@@ -25,20 +26,20 @@ class MQTTHandler():
         self.mqtt_client.on_message = self.on_message
 
     def start( self ):
-        print("Connecting to MQTT Broker.")
+        log_info("Connecting to MQTT Broker.")
         self.mqtt_client.connect( self.host, self.port, 60 )
         self.mqtt_client.loop_start()
 
     def stop( self ):
-        print("Disconnecting from MQTT Broker.")
+        log_info("Disconnecting from MQTT Broker.")
         self.mqtt_client.loop_stop( force=False )
         self.mqtt_client.disconnect()
 
     def on_connect( self, client, userdata, flags, rc ):
-        print( "Connected with result code " + str(rc) )
+        log_info( "Connected with result code " + str(rc) )
 
     def on_disconnect( self, client, userdata, rc ):
-        print( "Disconnected with result code " + str(rc) )
+        log_info( "Disconnected with result code " + str(rc) )
 
     def subscribe( self, topic ):
         self.mqtt_client.subscribe( topic )
@@ -84,6 +85,5 @@ if __name__ == '__main__':
 
     # cleanup
     mqtt_client.stop()
-    print( 'Closing program!' )
+    log_info( 'Closing program!' )
     sys.exit(0)
-    

@@ -13,6 +13,7 @@ import numpy
 from imutils.object_detection import non_max_suppression
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+from my_logging import *
 
 class OpenCVHandler(threading.Thread):
 
@@ -59,7 +60,7 @@ class OpenCVHandler(threading.Thread):
             # show the output images
             cv2.imshow("After NMS", image)
             key = cv2.waitKey(1) & 0xFF
-         
+
             # clear the stream in preparation for the next frame
             self.rawCapture.truncate(0)
 
@@ -97,8 +98,7 @@ if __name__ == '__main__':
         time.sleep( 1 )
 
     # cleanup
-    print( 'Closing program!' )
+    log_info( 'Closing program!' )
     opencv.stop_thread()
     opencv.join()
     sys.exit(0)
-    

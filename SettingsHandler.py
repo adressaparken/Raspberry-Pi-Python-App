@@ -8,6 +8,7 @@ import signal
 import time
 import pickle
 from pathlib import Path
+from my_logging import *
 
 class SettingsHandler():
 
@@ -85,6 +86,5 @@ if __name__ == '__main__':
         time.sleep( 0.1 )
 
     # cleanup
-    print( 'Closing program!' )
+    log_info( 'Closing program!' )
     sys.exit(0)
-    

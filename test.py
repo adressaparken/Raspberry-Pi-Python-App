@@ -11,8 +11,8 @@ from my_logging import *
 from SettingsHandler import SettingsHandler
 from MQTTHandler import MQTTHandler
 from OSCHandler import OSCHandler
-from OpenCVHandler import OpenCVHandler
-from envirophat import light, weather
+#from OpenCVHandler import OpenCVHandler
+#from envirophat import light, weather
 
 
 ##================================================================================//
@@ -25,7 +25,8 @@ settings = SettingsHandler( "settings" )
 
 server_ip = '192.168.1.1'
 broadcast_address = '192.168.1.255'
-pi_id = get_ID( server_ip )
+pi_id = 1
+# pi_id = get_ID( server_ip )           # TODO change back!!!
 
 running = True
 
@@ -37,7 +38,7 @@ mqtt_port = 1883
 osc_port = settings.set( "osc_port", 5005 )
 
 # Heartbeat interval - seconds between heartbeats
-heartbeat_interval = settings.set( "heartbeat_interval", 10 )
+heartbeat_interval = settings.set( "heartbeat_interval", 30 )
 
 # Temperature settings
 temperature_interval = settings.set( "temperature_interval", 5 )
@@ -100,18 +101,15 @@ pedestrians_osc_address = global_osc_address + '/pedestrians'
 #---/ Settings
 def set_settings( s ):
     global heartbeat_message
-    global osc_port
     global temperature_interval, temperature_mqtt, temperature_osc
     global pressure_interval, pressure_mqtt, pressure_osc
     global light_interval, light_mqtt, light_osc
     global pedestrians_interval, pedestrians_mqtt, pedestrians_osc
 
-    print( s )
-
     s = s.split(',')
 
     # OSC port
-    osc_port = settings.store( "osc_port", int(s[0]) )
+    osc_port = settings.set( "osc_port", int(s[0]) )
 
     # Temperature
     temperature_interval = settings.store( "temperature_interval", int(s[1]) )
@@ -186,22 +184,26 @@ def send_hearbeat():
 #------------------------------------------/
 #---/ get temperature
 def get_temperature():
-    return weather.temperature()
+    #return weather.temperature()
+    return 1
 
 #------------------------------------------/
 #---/ get pressure
 def get_pressure():
-    return weather.pressure()
+    #return weather.pressure()
+    return 1
 
 #------------------------------------------/
 #---/ get pressure
 def get_light():
-    return light.light()
+    #return light.light()
+    return 1
 
 #------------------------------------------/
 #---/ get pressure
 def get_pedestrians():
-    return opencv.get_num_detected()
+    #return opencv.get_num_detected()
+    return 1
 
 #------------------------------------------/
 #---/ sensor loop
@@ -222,6 +224,8 @@ def sensor_loop():
 
             if ( temperature_osc ):
                 osc_handler.send_message( temperature_osc_address, str( t ) )
+                print( temperature_osc_address )
+                print( str( t ) )
 
             temperature = (t, current_time + temperature_interval * 1000)
 
@@ -286,7 +290,7 @@ def signal_handler( signal , frame ):
 ##-------------------------------------------------------------// Main program logic
 
 def main():
-    global running, pi_id, mqtt_client, osc_handler, opencv
+    global running, pi_id, mqtt_client, osc_handler#, opencv
     global temperature, pressure, light, pedestrians
 
     log_info( "Raspberry Pi node with ID " + str( pi_id ) + " starting..." )
@@ -302,14 +306,16 @@ def main():
 
     # Initialise OSC handler
     osc_handler = OSCHandler( broadcast_address, osc_port )
+    #osc_client = udp_client.SimpleUDPClient( broadcast_address, osc_port )
+    #osc_client.send_message( address, msg )
 
     # Initialise heartbeat thread
     heartbeat_thread = threading.Thread( target=send_hearbeat )
     heartbeat_thread.start()
 
     # Initialise OpenCV thread
-    opencv = OpenCVHandler( 640, 480, 32 )
-    opencv.start()
+    #opencv = OpenCVHandler( 640, 480, 32 )
+    #opencv.start()
 
     # Initialise sensor thread
     sensor_thread = threading.Thread( target=sensor_loop )
@@ -329,8 +335,8 @@ def main():
         time.sleep( 0.1 )
 
     # Cleanup
-    opencv.stop_thread()
-    opencv.join()
+    #opencv.stop_thread()
+    #opencv.join()
     heartbeat_thread.join()
     sensor_thread.join()
     mqtt_client.stop()

@@ -7,9 +7,12 @@ import sys
 import signal
 import time
 import random
+import socket
 
 from pythonosc import osc_message_builder
 from pythonosc import udp_client
+
+from my_logging import *
 
 class OSCHandler():
 
@@ -21,16 +24,17 @@ class OSCHandler():
 
 
 if __name__ == '__main__':
-    
+
     # init stuff
-    osc = OSCHandler( "localhost", 5005 )
+    osc = OSCHandler( "192.168.1.255", 5005 )
 
     # main program loop
     for x in range(10):
         osc.send_message("/filter", random.random())
+
+
         time.sleep(1)
 
     # cleanup
-    print( 'Closing program!' )
+    log_info( 'Closing program!' )
     sys.exit(0)
-    

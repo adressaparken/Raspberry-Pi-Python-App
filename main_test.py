@@ -11,8 +11,8 @@ from my_logging import *
 from SettingsHandler import SettingsHandler
 from MQTTHandler import MQTTHandler
 from OSCHandler import OSCHandler
-from OpenCVHandler import OpenCVHandler
-from envirophat import light, weather
+#from OpenCVHandler import OpenCVHandler
+#from envirophat import light, weather
 
 
 ##================================================================================//
@@ -25,7 +25,8 @@ settings = SettingsHandler( "settings" )
 
 server_ip = '192.168.1.1'
 broadcast_address = '192.168.1.255'
-pi_id = get_ID( server_ip )
+pi_id = 1
+# pi_id = get_ID( server_ip )           # TODO change back!!!
 
 running = True
 
@@ -186,22 +187,26 @@ def send_hearbeat():
 #------------------------------------------/
 #---/ get temperature
 def get_temperature():
-    return weather.temperature()
+    #return weather.temperature()
+    return 1
 
 #------------------------------------------/
 #---/ get pressure
 def get_pressure():
-    return weather.pressure()
+    #return weather.pressure()
+    return 1
 
 #------------------------------------------/
 #---/ get pressure
 def get_light():
-    return light.light()
+    #return light.light()
+    return 1
 
 #------------------------------------------/
 #---/ get pressure
 def get_pedestrians():
-    return opencv.get_num_detected()
+    #return opencv.get_num_detected()
+    return 1
 
 #------------------------------------------/
 #---/ sensor loop
@@ -286,7 +291,7 @@ def signal_handler( signal , frame ):
 ##-------------------------------------------------------------// Main program logic
 
 def main():
-    global running, pi_id, mqtt_client, osc_handler, opencv
+    global running, pi_id, mqtt_client, osc_handler#, opencv
     global temperature, pressure, light, pedestrians
 
     log_info( "Raspberry Pi node with ID " + str( pi_id ) + " starting..." )
@@ -308,8 +313,8 @@ def main():
     heartbeat_thread.start()
 
     # Initialise OpenCV thread
-    opencv = OpenCVHandler( 640, 480, 32 )
-    opencv.start()
+    #opencv = OpenCVHandler( 640, 480, 32 )
+    #opencv.start()
 
     # Initialise sensor thread
     sensor_thread = threading.Thread( target=sensor_loop )
@@ -329,8 +334,8 @@ def main():
         time.sleep( 0.1 )
 
     # Cleanup
-    opencv.stop_thread()
-    opencv.join()
+    #opencv.stop_thread()
+    #opencv.join()
     heartbeat_thread.join()
     sensor_thread.join()
     mqtt_client.stop()
