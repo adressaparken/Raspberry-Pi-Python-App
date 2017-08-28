@@ -54,15 +54,15 @@ class OpenCVHandler(threading.Thread):
         time.sleep(0.1)
 
         frame_num = 0
+        image_grayscale = None
+        previous_image_grayscale = None
 
         for frame in self.camera.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
             # grab the raw NumPy array representing the image, then initialize the timestamp
             # and occupied/unoccupied text
             image = frame.array
-            image = imutils.resize( image, width=min(400, image.shape[1] ))
+            image = imutils.resize( image, width=min(640, image.shape[1] ))
             image_grayscale = cv2.cvtColor( image, cv2.COLOR_BGR2GRAY )
-
-            # image_processes, self.num_detected = detect_people( image )
 
             # detect people in the image
             (rects, weights) = self.hog.detectMultiScale(image, winStride=(4, 4), padding=(8, 8), scale=1.05)
