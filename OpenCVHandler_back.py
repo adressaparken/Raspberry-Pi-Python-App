@@ -58,9 +58,7 @@ class OpenCVHandler(threading.Thread):
 
             if( previous_image_grayscale is not None ):
 
-                print(str(image.shape[1]), str((3000/640)*image.shape[1]))
-
-                min_area=(3000/640)*image.shape[1]
+                min_area=(2000/640)*image.shape[1]
                 if( self.background_subtraction( previous_image_grayscale, image_grayscale, min_area ) ):
 
                     # detect people in the image
@@ -83,11 +81,11 @@ class OpenCVHandler(threading.Thread):
                     #  cv2.imshow("After NMS", image)
                     # key = cv2.waitKey(1) & 0xFF
 
-                    filename = "image" + str(frame_num) + ".jpg"
-                    cv2.imwrite(filename,image)
+                    # filename = "image" + str(frame_num) + ".jpg"
+                    # cv2.imwrite(filename,image)
                     # cv2.imwrite('image_processes.jpg',image_processes)
 
-                    print( "People detected(" + str(frame_num) + "): " + str(self.num_detected) )
+                    # print( "People detected(" + str(frame_num) + "): " + str(self.num_detected) )
 
             # clear the stream in preparation for the next frame
             self.rawCapture.truncate(0)
