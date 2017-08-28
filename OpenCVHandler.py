@@ -66,7 +66,7 @@ class OpenCVHandler(threading.Thread):
             if( previous_image_grayscale is not None ):
 
                 min_area=(3000/640)*image.shape[1]
-                if( background_subtraction( previous_image_grayscale, image_grayscale, min_area ) ):
+                if( self.background_subtraction( previous_image_grayscale, image_grayscale, min_area ) ):
 
                     # detect people in the image
                     (rects, weights) = self.hog.detectMultiScale(image, winStride=(4, 4), padding=(8, 8), scale=1.05)
