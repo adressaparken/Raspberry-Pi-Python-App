@@ -54,7 +54,7 @@ class OpenCVHandler(threading.Thread):
             # image = imutils.resize( image, width=min(400, image.shape[1] ))
             image_grayscale = cv2.cvtColor( image, cv2.COLOR_BGR2GRAY )
 
-            self.image = fgbg.apply(image)
+            image = self.fgbg.apply(image)
 
             # detect people in the image
             (rects, weights) = self.hog.detectMultiScale(image, winStride=(4, 4), padding=(8, 8), scale=1.05)
