@@ -224,7 +224,11 @@ def sensor_loop():
         if ( t is not temperature[0] or current_time >= temperature[1] ):
             if ( temperature_mqtt ):
                 mqtt_client.publish_message( temperature_mqtt_topic, t )
+                print( "===" )
+                print(str( t is not temperature[0] ))
                 print( str(t) + " " + str(temperature[0]) )
+                print(str( current_time >= temperature[1] ))
+                print(str( current_time ) + " " + str(temperature[1]))
 
             if ( temperature_osc ):
                 osc_handler.send_message( temperature_osc_address, str( t ) )
