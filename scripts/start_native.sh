@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NATIVE_APP='python_test'
+NATIVE_APP='rpi_main'
 ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -17,5 +17,4 @@ while true; do
     read -t 2 -p "Restarting the native app in 2 seconds. Press <CTRL>+c to stop."
     echo "-----------------------------------"
 
-done 
-
+done
