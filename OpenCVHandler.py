@@ -53,6 +53,8 @@ class OpenCVHandler(threading.Thread):
         # camera warmup
         time.sleep(0.1)
 
+        frame_num = 0
+
         for frame in self.camera.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
             # grab the raw NumPy array representing the image, then initialize the timestamp
             # and occupied/unoccupied text
@@ -87,6 +89,11 @@ class OpenCVHandler(threading.Thread):
 
             # clear the stream in preparation for the next frame
             self.rawCapture.truncate(0)
+
+            print( "People detected(" + str(frame_num) + "): " + str(self.num_detected) )
+
+
+            frame_num += 1
 
             if (not self.running):
                 break
