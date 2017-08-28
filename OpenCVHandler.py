@@ -49,17 +49,24 @@ class OpenCVHandler(threading.Thread):
         frame_num = 0
 
         for frame in self.camera.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
+            start_time = current_milli_time()
+
             image = frame.array
-            # image = imutils.resize( image, width=min(400, image.shape[1] ))
+
+            log_info("Grabbed image: " + str(start_time-current_milli_time()))
 
             # detect people in the image
             (rects, weights) = self.hog.detectMultiScale(image, winStride=(4, 4), padding=(8, 8), scale=1.05)
+
+            log_info("Detect People: " + str(start_time-current_milli_time()))
 
             # apply non-maxima suppression to the bounding boxes using a
             # fairly large overlap threshold to try to maintain overlapping
             # boxes that are still people
             rects = numpy.array([[x, y, x + w, y + h] for (x, y, w, h) in rects])
             pick = non_max_suppression(rects, probs=None, overlapThresh=0.65)
+
+            log_info("Pick: " + str(start_time-current_milli_time()))
 
             # draw the final bounding boxes
             for (xA, yA, xB, yB) in pick:
@@ -72,14 +79,16 @@ class OpenCVHandler(threading.Thread):
             # cv2.imshow("After NMS", image)
             # key = cv2.waitKey(1) & 0xFF
 
-            filename = "image" + str(frame_num) + ".jpg"
-            cv2.imwrite(filename,image)
+            # filename = "image" + str(frame_num) + ".jpg"
+            # cv2.imwrite(filename,image)
             # cv2.imwrite('image_processes.jpg',image_processes)
 
             print( "People detected(" + str(frame_num) + "): " + str(self.num_detected) )
 
             # clear the stream in preparation for the next frame
             self.rawCapture.truncate(0)
+
+            log_info("Finished: " + str(start_time-current_milli_time()))
 
             frame_num += 1
 
@@ -107,7 +116,7 @@ if __name__ == '__main__':
     signal.signal( signal.SIGINT , signal_handler )
 
     # init stuff
-    opencv = OpenCVHandler( 640, 480, 10 )
+    opencv = OpenCVHa ndler( 400, 300, 15 )
     opencv.start()
 
     # main program loop

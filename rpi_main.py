@@ -47,17 +47,17 @@ heartbeat_interval = settings.set( "heartbeat_interval", 10 )
 # Temperature settings
 temperature_interval = settings.set( "temperature_interval", 5 )
 temperature_mqtt = settings.set( "temperature_mqtt", True )
-temperature_osc = settings.set( "temperature_osc", False )
+temperature_osc = settings.set( "temperature_osc", True )
 
 # Pressure settings
 pressure_interval = settings.set( "pressure_interval", 5 )
 pressure_mqtt = settings.set( "pressure_mqtt", True )
-pressure_osc = settings.set( "pressure_osc", False )
+pressure_osc = settings.set( "pressure_osc", True )
 
 # Pressure settings
 light_interval = settings.set( "light_interval", 5 )
 light_mqtt = settings.set( "light_mqtt", True )
-light_osc = settings.set( "light_osc", False )
+light_osc = settings.set( "light_osc", True )
 
 # Pedestrians settings
 pedestrians_interval = settings.set( "pedestrians_interval", 5 )
@@ -222,7 +222,7 @@ def sensor_loop():
         # get temperature
         t = get_temperature()
         # if temperature changed or timer has passed, send
-        if ( t is not temperature[0] or current_time >= temperature[1] ):
+        if ( current_time >= temperature[1] ):
             if ( temperature_mqtt ):
                 mqtt_client.publish_message( temperature_mqtt_topic, t )
 
@@ -234,7 +234,7 @@ def sensor_loop():
         # get pressure
         p = get_pressure()
         # if pressure changed or timer has passed, send
-        if ( p is not pressure[0] or current_time >= pressure[1] ):
+        if ( current_time >= pressure[1] ):
             if ( pressure_mqtt ):
                 mqtt_client.publish_message( pressure_mqtt_topic, p )
 
@@ -246,7 +246,7 @@ def sensor_loop():
         # get light
         l = get_light()
         # if light changed or timer has passed, send
-        if ( l is not light[0] or current_time >= light[1] ):
+        if ( current_time >= light[1] ):
             if ( light_mqtt ):
                 mqtt_client.publish_message( light_mqtt_topic, l )
 
