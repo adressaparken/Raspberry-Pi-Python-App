@@ -116,7 +116,7 @@ if __name__ == '__main__':
     signal.signal( signal.SIGINT , signal_handler )
 
     # init stuff
-    opencv = OpenCVHa ndler( 400, 300, 15 )
+    opencv = OpenCVHandler( 400, 300, 15 )
     opencv.start()
 
     # main program loop
