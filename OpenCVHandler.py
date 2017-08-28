@@ -54,12 +54,12 @@ class OpenCVHandler(threading.Thread):
 
             image = frame.array
 
-            log_info("Grabbed image: " + str(start_time-current_milli_time()))
+            log_info("Grabbed image: " + str(current_milli_time()-start_time))
 
             # detect people in the image
             (rects, weights) = self.hog.detectMultiScale(image, winStride=(4, 4), padding=(8, 8), scale=1.05)
 
-            log_info("Detect People: " + str(start_time-current_milli_time()))
+            log_info("Detect People: " + str(current_milli_time()-start_time))
 
             # apply non-maxima suppression to the bounding boxes using a
             # fairly large overlap threshold to try to maintain overlapping
@@ -67,7 +67,7 @@ class OpenCVHandler(threading.Thread):
             rects = numpy.array([[x, y, x + w, y + h] for (x, y, w, h) in rects])
             pick = non_max_suppression(rects, probs=None, overlapThresh=0.65)
 
-            log_info("Pick: " + str(start_time-current_milli_time()))
+            log_info("Pick: " + str(current_milli_time()-start_time))
 
             # draw the final bounding boxes
             for (xA, yA, xB, yB) in pick:
@@ -89,7 +89,7 @@ class OpenCVHandler(threading.Thread):
             # clear the stream in preparation for the next frame
             self.rawCapture.truncate(0)
 
-            log_info("Finished: " + str(start_time-current_milli_time()))
+            log_info("Finished: " + str(current_milli_time()-start_time))
 
             frame_num += 1
 
