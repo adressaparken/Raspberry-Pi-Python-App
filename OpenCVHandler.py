@@ -51,7 +51,6 @@ class OpenCVHandler(threading.Thread):
         for frame in self.camera.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
             image = frame.array
             # image = imutils.resize( image, width=min(400, image.shape[1] ))
-            image_grayscale = cv2.cvtColor( image, cv2.COLOR_BGR2GRAY )
 
             # detect people in the image
             (rects, weights) = self.hog.detectMultiScale(image, winStride=(4, 4), padding=(8, 8), scale=1.05)
