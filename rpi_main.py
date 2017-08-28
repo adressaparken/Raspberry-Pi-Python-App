@@ -141,7 +141,7 @@ def set_settings( s ):
     # Pressure
     pressure_interval = settings.store( "pressure_interval", int(s[4]) )
     pressure_mqtt = settings.store( "pressure_mqtt", bool(int(s[5])) )
-    pressure_osc = settings.store( "pressure_osc", bool(int(s[6])) )
+    pressure_osc = settings.store( "pressure_osc", bool(int(s[6])) )pyaudio OSError: [Errno -9981] Input overflowed
 
     # Light
     light_interval = settings.store( "light_interval", int(s[7]) )
@@ -210,8 +210,8 @@ def send_hearbeat():
 ##================================================================================//
 ##--------------------------------------------------------------------------// Sound
 
-CHUNK = 4096
-RATE = 44100
+CHUNK = 2048
+RATE = 48000
 
 #------------------------------------------/
 #---/ send decibel level
