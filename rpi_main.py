@@ -191,17 +191,17 @@ def send_hearbeat():
 #------------------------------------------/
 #---/ get temperature
 def get_temperature():
-    return envirophat_weather.temperature()
+    return round( envirophat_weather.temperature(), 1)
 
 #------------------------------------------/
 #---/ get pressure
 def get_pressure():
-    return envirophat_weather.pressure()
+    return round( envirophat_weather.pressure(), 1)
 
 #------------------------------------------/
 #---/ get pressure
 def get_light():
-    return envirophat_light.light()
+    return round( envirophat_light.light(), 1)
 
 #------------------------------------------/
 #---/ get pressure
@@ -224,7 +224,6 @@ def sensor_loop():
         if ( t is not temperature[0] or current_time >= temperature[1] ):
             if ( temperature_mqtt ):
                 mqtt_client.publish_message( temperature_mqtt_topic, t )
-                print( temperature )
 
             if ( temperature_osc ):
                 osc_handler.send_message( temperature_osc_address, str( t ) )
