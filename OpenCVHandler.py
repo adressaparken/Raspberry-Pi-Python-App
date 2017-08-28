@@ -65,6 +65,8 @@ class OpenCVHandler(threading.Thread):
 
             if( previous_image_grayscale is not None ):
 
+                print("OKAY")
+
                 min_area=(3000/640)*image.shape[1]
                 if( self.background_subtraction( previous_image_grayscale, image_grayscale, min_area ) ):
 
