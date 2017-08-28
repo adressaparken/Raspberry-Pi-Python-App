@@ -84,7 +84,8 @@ class OpenCVHandler(threading.Thread):
             #  cv2.imshow("After NMS", image)
             # key = cv2.waitKey(1) & 0xFF
 
-            cv2.imwrite('image.jpg',image)
+            filename = "image" + str(frame_num) + ".jpg"
+            cv2.imwrite(filename,image)
             # cv2.imwrite('image_processes.jpg',image_processes)
 
             # clear the stream in preparation for the next frame
