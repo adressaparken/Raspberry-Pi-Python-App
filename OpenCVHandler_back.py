@@ -78,14 +78,14 @@ class OpenCVHandler(threading.Thread):
                     self.num_detected = len(pick)
 
                     # show the output images
-                    #  cv2.imshow("After NMS", image)
+                    # cv2.imshow("After NMS", image)
                     # key = cv2.waitKey(1) & 0xFF
 
                     # filename = "image" + str(frame_num) + ".jpg"
-                    # cv2.imwrite(filename,image)
-                    # cv2.imwrite('image_processes.jpg',image_processes)
+                    cv2.imwrite(filename,image)
+                    cv2.imwrite('image_processes.jpg',image_processes)
 
-                    # print( "People detected(" + str(frame_num) + "): " + str(self.num_detected) )
+                    print( "People detected(" + str(frame_num) + "): " + str(self.num_detected) )
 
             # clear the stream in preparation for the next frame
             self.rawCapture.truncate(0)
