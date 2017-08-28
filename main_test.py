@@ -28,7 +28,7 @@ set_debug( args.DEBUG )
 settings = SettingsHandler( "settings" )
 
 server_ip = '192.168.1.1'
-broadcast_address = '192.168.255.255'
+broadcast_address = '192.168.1.255'
 pi_id = 1
 # pi_id = get_ID( server_ip )           # TODO change back!!!
 

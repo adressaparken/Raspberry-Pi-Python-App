@@ -28,13 +28,13 @@ set_debug( args.DEBUG )
 settings = SettingsHandler( "settings" )
 
 server_ip = '192.168.1.1'
-broadcast_address = '192.168.1.255'
+broadcast_address = '192.168.255.255'
 pi_id = get_ID( server_ip )
 
 running = True
 
 # MQTT server address and port
-mqtt_broker = 'localhost'
+mqtt_broker = server_ip
 mqtt_port = 1883
 
 # OSC port
