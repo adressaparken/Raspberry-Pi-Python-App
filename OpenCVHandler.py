@@ -65,7 +65,7 @@ class OpenCVHandler(threading.Thread):
 
             if( previous_image_grayscale is not None ):
 
-                min_area=(3000/640)*frame_resized.shape[1]
+                min_area=(3000/640)*image.shape[1]
                 if( background_subtraction( previous_image_grayscale, image_grayscale, min_area ) ):
 
                     # detect people in the image
