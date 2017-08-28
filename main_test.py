@@ -79,6 +79,7 @@ heartbeat_message += ',' + str( pedestrians_interval ) + ',' + str( int(pedestri
 
 # MQTT topics
 global_mqtt_topic = 'parken/rpi/' + str(pi_id)
+quit_topic = global_mqtt_topic + '/quit'
 heartbeat_topic = global_mqtt_topic + '/heartbeat'
 settings_topic = global_mqtt_topic + '/settings'
 temperature_mqtt_topic = global_mqtt_topic + '/temperature'
@@ -307,6 +308,7 @@ def main():
     q = Queue()
     mqtt_client = MQTTHandler( q, mqtt_broker, mqtt_port )
     mqtt_client.start()
+    mqtt_client.subscribe( quit_topic )
     mqtt_client.subscribe( settings_topic )
 
     # Initialise OSC handler
@@ -334,6 +336,9 @@ def main():
             # Settings
             if (topic == settings_topic):
                 set_settings( msg.decode() )
+            elif (topic == quit_topic):
+                log_info( "Received command to quit." )
+                running = False
 
         time.sleep( 0.1 )
 
