@@ -9,6 +9,10 @@ import socket
 from multiprocessing import Queue
 from utils import *
 from my_logging import *
+import pyaudio
+import numpy as np
+import audioop
+import math
 from SettingsHandler import SettingsHandler
 from MQTTHandler import MQTTHandler
 from OSCHandler import OSCHandler
