@@ -24,4 +24,4 @@ def current_milli_time():
 #------------------------------------------/
 #---/get RPi ID
 def get_ID( server_ip ):
-    return get_ip_address( server_ip ).split('.')[-1] - 1
+    return get_ip_address( server_ip ).split('.')[-1]
