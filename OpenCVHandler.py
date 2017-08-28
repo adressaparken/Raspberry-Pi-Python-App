@@ -58,8 +58,8 @@ class OpenCVHandler(threading.Thread):
             self.num_detected = len(pick)
 
             # show the output images
-            cv2.imshow("After NMS", image)
-            key = cv2.waitKey(1) & 0xFF
+            # cv2.imshow("After NMS", image)
+            # key = cv2.waitKey(1) & 0xFF
 
             # clear the stream in preparation for the next frame
             self.rawCapture.truncate(0)
