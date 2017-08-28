@@ -13,7 +13,8 @@ from SettingsHandler import SettingsHandler
 from MQTTHandler import MQTTHandler
 from OSCHandler import OSCHandler
 from OpenCVHandler import OpenCVHandler
-from envirophat import light, weather
+from envirophat import weather as envirophat_weather
+from envirophat import light as envirophat_light
 
 
 ##================================================================================//
@@ -190,17 +191,17 @@ def send_hearbeat():
 #------------------------------------------/
 #---/ get temperature
 def get_temperature():
-    return weather.temperature()
+    return envirophat_weather.temperature()
 
 #------------------------------------------/
 #---/ get pressure
 def get_pressure():
-    return weather.pressure()
+    return envirophat_weather.pressure()
 
 #------------------------------------------/
 #---/ get pressure
 def get_light():
-    return light.light()
+    return envirophat_light.light()
 
 #------------------------------------------/
 #---/ get pressure
