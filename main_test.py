@@ -3,6 +3,7 @@
 import sys
 import signal
 import time
+import argparse
 import threading
 import socket
 from multiprocessing import Queue
@@ -19,7 +20,10 @@ from OSCHandler import OSCHandler
 ##------------------------------------------------------------------------// Globals
 
 # Set debug level
-set_debug( True )
+parser = argparse.ArgumentParser()
+parser.add_argument( "--DEBUG", action='store_true', help="Set debugging mode" )
+args = parser.parse_args()
+set_debug( args.DEBUG )
 
 settings = SettingsHandler( "settings" )
 
