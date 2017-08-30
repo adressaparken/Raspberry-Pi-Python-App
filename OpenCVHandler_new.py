@@ -66,7 +66,7 @@ class OpenCVHandler():
             # crop image
             image = image[ 0:480, 128:512  ]
 
-            print( str(image.width), str(image.height) )
+            print( str(len(image)), str(len(image[0])) )
 
             image_back = self.fgbg.apply(image)
 
