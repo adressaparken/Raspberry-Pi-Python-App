@@ -29,7 +29,9 @@ class OpenCVHandler(threading.Thread):
         self.hog = cv2.HOGDescriptor()
         self.hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
+        self.num_detected_old = (0,0,0)
         self.num_detected = 0
+        self.lock = Lock()
 
     def background_subtraction( self, previous_frame, frame, min_area):
         frameDelta = cv2.absdiff( previous_frame, frame )
@@ -66,7 +68,10 @@ class OpenCVHandler(threading.Thread):
                 cv2.rectangle(image, (xA, yA), (xB, yB), (0, 255, 0), 2)
 
             # save number of people detected
-            self.num_detected = len(pick)
+            self.lock.acquire()
+            self.num_detected_old = (len(pick), self.num_detected[0], self.num_detected[1])
+            self.num_detected = max( self.num_detected[0], self.num_detected[1], self.num_detected[2] )
+            self.lock.release()
 
             # show the output images
             # cv2.imshow("After NMS", image)
@@ -91,7 +96,10 @@ class OpenCVHandler(threading.Thread):
         self.running = False
 
     def get_num_detected( self ):
-        return self.num_detected
+        self.lock.acquire()
+        n = self.num_detected
+        self.lock.release()
+        return n
 
 
 

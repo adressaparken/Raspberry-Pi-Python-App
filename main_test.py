@@ -16,8 +16,9 @@ import math
 from SettingsHandler import SettingsHandler
 from MQTTHandler import MQTTHandler
 from OSCHandler import OSCHandler
-#from OpenCVHandler import OpenCVHandler
-#from envirophat import light, weather
+# from OpenCVHandler import OpenCVHandler
+# from envirophat import weather as envirophat_weather
+# from envirophat import light as envirophat_light
 
 
 ##================================================================================//
@@ -32,14 +33,13 @@ set_debug( args.DEBUG )
 settings = SettingsHandler( "settings" )
 
 server_ip = '192.168.1.1'
-broadcast_address = '192.168.1.255'
-pi_id = 1
-# pi_id = get_ID( server_ip )           # TODO change back!!!
+broadcast_address = '192.168.255.255'
+pi_id = get_ID( server_ip )
 
 running = True
 
 # MQTT server address and port
-mqtt_broker = 'localhost'
+mqtt_broker = server_ip
 mqtt_port = 1883
 
 # OSC port
@@ -51,27 +51,22 @@ heartbeat_interval = settings.set( "heartbeat_interval", 10 )
 # Temperature settings
 temperature_interval = settings.set( "temperature_interval", 5 )
 temperature_mqtt = settings.set( "temperature_mqtt", True )
-temperature_osc = settings.set( "temperature_osc", False )
+temperature_osc = settings.set( "temperature_osc", True )
 
 # Pressure settings
 pressure_interval = settings.set( "pressure_interval", 5 )
 pressure_mqtt = settings.set( "pressure_mqtt", True )
-pressure_osc = settings.set( "pressure_osc", False )
+pressure_osc = settings.set( "pressure_osc", True )
 
 # Pressure settings
 light_interval = settings.set( "light_interval", 5 )
 light_mqtt = settings.set( "light_mqtt", True )
-light_osc = settings.set( "light_osc", False )
+light_osc = settings.set( "light_osc", True )
 
 # Pedestrians settings
 pedestrians_interval = settings.set( "pedestrians_interval", 5 )
 pedestrians_mqtt = settings.set( "pedestrians_mqtt", True )
 pedestrians_osc = settings.set( "pedestrians_osc", False )
-
-# Decibel settings
-decibel_interval = settings.set( "decibel_interval", 5 )
-decibel_mqtt = settings.set( "decibel_mqtt", True )
-decibel_osc = settings.set( "decibel_osc", False )
 
 # Sensor values
 temperature = ( 0, current_milli_time() )
@@ -86,7 +81,7 @@ heartbeat_message += ',' + str( temperature_interval ) + ',' + str( int(temperat
 heartbeat_message += ',' + str( pressure_interval ) + ',' + str( int(pressure_mqtt) ) + ',' + str( int(pressure_osc) )
 heartbeat_message += ',' + str( light_interval ) + ',' + str( int(light_mqtt) ) + ',' + str( int(light_osc) )
 heartbeat_message += ',' + str( pedestrians_interval ) + ',' + str( int(pedestrians_mqtt) ) + ',' + str( int(pedestrians_osc) )
-heartbeat_message += ',' + str( decibel_interval ) + ',' + str( int(decibel_mqtt) ) + ',' + str( int(decibel_osc) )
+# heartbeat_message += ',' + str( decibel_interval ) + ',' + str( int(decibel_mqtt) ) + ',' + str( int(decibel_osc) )
 
 # MQTT topics
 global_mqtt_topic = 'parken/rpi/' + str(pi_id)
@@ -154,9 +149,9 @@ def set_settings( s ):
     pedestrians_osc = settings.store( "pedestrians_osc", bool(int(s[12])) )
 
     # Pedestrians
-    decibel_interval = settings.store( "decibel_interval", int(s[13]) )
-    decibel_mqtt = settings.store( "decibel_mqtt", bool(int(s[14])) )
-    decibel_osc = settings.store( "decibel_osc", bool(int(s[15])) )
+    # decibel_interval = settings.store( "decibel_interval", int(s[13]) )
+    # decibel_mqtt = settings.store( "decibel_mqtt", bool(int(s[14])) )
+    # decibel_osc = settings.store( "decibel_osc", bool(int(s[15])) )
 
     # averaged values also (over a day?)
     # add sound stuff (amplitude, etc.)
@@ -170,7 +165,7 @@ def set_settings( s ):
     heartbeat_message += ',' + str( pressure_interval ) + ',' + str( int( pressure_mqtt ) ) + ',' + str( int( pressure_osc ) )
     heartbeat_message += ',' + str( light_interval ) + ',' + str( int( light_mqtt ) ) + ',' + str( int( light_osc ) )
     heartbeat_message += ',' + str( pedestrians_interval ) + ',' + str( int( pedestrians_mqtt ) ) + ',' + str( int( pedestrians_osc ) )
-    heartbeat_message += ',' + str( decibel_interval ) + ',' + str( int(decibel_mqtt) ) + ',' + str( int(decibel_osc) )
+    # heartbeat_message += ',' + str( decibel_interval ) + ',' + str( int(decibel_mqtt) ) + ',' + str( int(decibel_osc) )
 
     mqtt_client.publish_message( heartbeat_topic, heartbeat_message )
 
@@ -180,7 +175,7 @@ def set_settings( s ):
     log_info( "Pressure interval/MQTT/OSC    - " + str( pressure_interval ) + "/" + str( pressure_mqtt ) + "/" + str( pressure_osc ) )
     log_info( "Light interval/MQTT/OSC       - " + str( light_interval ) + "/" + str( light_mqtt ) + "/" + str( light_osc ) )
     log_info( "Pedestrians interval/MQTT/OSC - " + str( pedestrians_interval ) + "/" + str( pedestrians_mqtt ) + "/" + str( pedestrians_osc ) )
-    log_info( "Decibel interval/MQTT/OSC - " + str( decibel_interval ) + "/" + str( decibel_mqtt ) + "/" + str( decibel_osc ) )
+    # log_info( "Decibel interval/MQTT/OSC - " + str( decibel_interval ) + "/" + str( decibel_mqtt ) + "/" + str( decibel_osc ) )
 
 ##-----------------------------------------------------------------------// Settings
 ##--------------------------------------------------------------------------------//
@@ -210,8 +205,8 @@ def send_hearbeat():
 ##================================================================================//
 ##--------------------------------------------------------------------------// Sound
 
-CHUNK = 4096
-RATE = 44100
+CHUNK = 2048
+RATE = 48000
 
 #------------------------------------------/
 #---/ send decibel level
@@ -260,25 +255,25 @@ def send_decibel():
 #------------------------------------------/
 #---/ get temperature
 def get_temperature():
-    #return weather.temperature()
+    # return round( envirophat_weather.temperature(), 1)
     return 1
 
 #------------------------------------------/
 #---/ get pressure
 def get_pressure():
-    #return weather.pressure()
+    # return round( envirophat_weather.pressure(), 1)
     return 1
 
 #------------------------------------------/
 #---/ get pressure
 def get_light():
-    #return light.light()
+    # return round( envirophat_light.light(), 1)
     return 1
 
 #------------------------------------------/
 #---/ get pressure
 def get_pedestrians():
-    #return opencv.get_num_detected()
+    # return opencv.get_num_detected()
     return 1
 
 #------------------------------------------/
@@ -294,7 +289,7 @@ def sensor_loop():
         # get temperature
         t = get_temperature()
         # if temperature changed or timer has passed, send
-        if ( t is not temperature[0] or current_time >= temperature[1] ):
+        if ( current_time >= temperature[1] ):
             if ( temperature_mqtt ):
                 mqtt_client.publish_message( temperature_mqtt_topic, t )
 
@@ -306,7 +301,7 @@ def sensor_loop():
         # get pressure
         p = get_pressure()
         # if pressure changed or timer has passed, send
-        if ( p is not pressure[0] or current_time >= pressure[1] ):
+        if ( current_time >= pressure[1] ):
             if ( pressure_mqtt ):
                 mqtt_client.publish_message( pressure_mqtt_topic, p )
 
@@ -318,7 +313,7 @@ def sensor_loop():
         # get light
         l = get_light()
         # if light changed or timer has passed, send
-        if ( l is not light[0] or current_time >= light[1] ):
+        if ( current_time >= light[1] ):
             if ( light_mqtt ):
                 mqtt_client.publish_message( light_mqtt_topic, l )
 
@@ -387,12 +382,12 @@ def main():
     heartbeat_thread.start()
 
     # Initialise OpenCV thread
-    #opencv = OpenCVHandler( 640, 480, 32 )
-    #opencv.start()
+    # opencv = OpenCVHandler( 640, 480, 32 )
+    # opencv.start()
 
     # Initialise sensor thread
-    decibel_thread = threading.Thread( target=send_decibel )
-    decibel_thread.start()
+    # decibel_thread = threading.Thread( target=send_decibel )
+    # decibel_thread.start()
 
     # Initialise sensor thread
     sensor_thread = threading.Thread( target=sensor_loop )
@@ -409,17 +404,16 @@ def main():
             if (topic == settings_topic):
                 set_settings( msg.decode() )
             elif (topic == quit_topic):
-                log_info( "Received command to quit." )
                 running = False
 
         time.sleep( 0.1 )
 
     # Cleanup
-    #opencv.stop_thread()
-    #opencv.join()
+    # opencv.stop_thread()
+    # opencv.join()
     heartbeat_thread.join()
+    # decibel_thread.join()
     sensor_thread.join()
-    decibel_thread.join()
     mqtt_client.stop()
     log_info( 'Closing program!' )
     sys.exit( 0 )
