@@ -16,7 +16,7 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 from my_logging import *
 
-class OpenCVHandler(threading.Thread):
+class OpenCVHandler():
 
     def __init__( self, res_w, res_h, framerate ):
         threading.Thread.__init__(self)
@@ -118,13 +118,7 @@ if __name__ == '__main__':
 
     # init stuff
     opencv = OpenCVHandler( 640, 480, 10 )
-    opencv.start()
-
-    # main program loop
-    running = True
-    while ( running ):
-        print( opencv.get_num_detected() )
-        time.sleep( 1 )
+    opencv.run()
 
     # cleanup
     log_info( 'Closing program!' )
