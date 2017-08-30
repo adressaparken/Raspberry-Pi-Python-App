@@ -31,7 +31,7 @@ class OpenCVHandler(threading.Thread):
 
         self.num_detected_old = (0,0,0)
         self.num_detected = 0
-        self.lock = Lock()
+        self.lock = threading.Lock()
 
     def background_subtraction( self, previous_frame, frame, min_area):
         frameDelta = cv2.absdiff( previous_frame, frame )
