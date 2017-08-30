@@ -58,11 +58,15 @@ class OpenCVHandler():
             # grab image
             image = frame.array
 
+            print( str(image.width), str(image.height) )
+
             # resize image (later?)
             # image = imutils.resize( image, width=min(400, image.shape[1] ))
 
             # crop image
             image = image[ 0:480, 128:512  ]
+
+            print( str(image.width), str(image.height) )
 
             image_back = self.fgbg.apply(image)
 
