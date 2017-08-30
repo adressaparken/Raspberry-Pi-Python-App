@@ -386,8 +386,13 @@ def main():
     # opencv.start()
 
     # Initialise sensor thread
+<<<<<<< HEAD
     # decibel_thread = threading.Thread( target=send_decibel )
     # decibel_thread.start()
+=======
+    #decibel_thread = threading.Thread( target=send_decibel )
+    #decibel_thread.start()
+>>>>>>> 1f28f96a7603a6b6edb551379039aa1acca30243
 
     # Initialise sensor thread
     sensor_thread = threading.Thread( target=sensor_loop )
@@ -414,6 +419,10 @@ def main():
     heartbeat_thread.join()
     # decibel_thread.join()
     sensor_thread.join()
+<<<<<<< HEAD
+=======
+    #decibel_thread.join()
+>>>>>>> 1f28f96a7603a6b6edb551379039aa1acca30243
     mqtt_client.stop()
     log_info( 'Closing program!' )
     sys.exit( 0 )

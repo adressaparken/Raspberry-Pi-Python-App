@@ -295,7 +295,7 @@ def sensor_loop():
                 mqtt_client.publish_message( temperature_mqtt_topic, t )
 
             if ( temperature_osc ):
-                osc_handler.send_message( temperature_osc_address, str( t ) )
+                osc_handler.send_message( temperature_osc_address, t )
 
             temperature = (t, current_time + temperature_interval * 1000)
 
@@ -307,7 +307,7 @@ def sensor_loop():
                 mqtt_client.publish_message( pressure_mqtt_topic, p )
 
             if ( pressure_osc ):
-                osc_handler.send_message( pressure_osc_address, str( p ) )
+                osc_handler.send_message( pressure_osc_address, p )
 
             pressure = (p, current_time + pressure_interval * 1000)
 
@@ -319,7 +319,7 @@ def sensor_loop():
                 mqtt_client.publish_message( light_mqtt_topic, l )
 
             if ( light_osc ):
-                osc_handler.send_message( light_osc_address, str( l ) )
+                osc_handler.send_message( light_osc_address, l )
 
             light = (l, current_time + light_interval * 1000)
 
@@ -331,7 +331,7 @@ def sensor_loop():
                 mqtt_client.publish_message( pedestrians_mqtt_topic, pe )
 
             if ( pedestrians_osc ):
-                osc_handler.send_message( pedestrians_osc_address, str( pe ) )
+                osc_handler.send_message( pedestrians_osc_address, pe )
 
             pedestrians = (pe, current_time + pedestrians_interval * 1000)
 
