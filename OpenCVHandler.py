@@ -69,8 +69,8 @@ class OpenCVHandler(threading.Thread):
 
             # save number of people detected
             self.lock.acquire()
-            self.num_detected_old = (len(pick), self.num_detected[0], self.num_detected[1])
-            self.num_detected = max( self.num_detected[0], self.num_detected[1], self.num_detected[2] )
+            self.num_detected_old = (len(pick), self.num_detected_old[0], self.num_detected_old[1])
+            self.num_detected = max( self.num_detected_old[0], self.num_detected_old[1], self.num_detected_old[2] )
             self.lock.release()
 
             # show the output images
