@@ -248,10 +248,10 @@ def sensor_loop():
         # if temperature changed or timer has passed, send
         if( temperature_change ):
             if( check_changed( temperature[0], t, temperature_change_threshold ) ):
-                # send
+                send = True
         else:
             if ( current_time >= temperature[1] ):
-                # send
+                send = True
 
         if( send ):
             if ( temperature_mqtt ):
