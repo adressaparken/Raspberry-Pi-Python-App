@@ -54,7 +54,7 @@ class SimpleUDPClient(UDPClient):
         msg = builder.build()
         self.send(msg)
 
-    def senf_float(self, address, value):
+    def send_float(self, address, value):
         """Compose an OSC message and send it."""
         builder = OscMessageBuilder(address=address)
         if not isinstance(value, Iterable) or isinstance(value, (str, bytes)):
