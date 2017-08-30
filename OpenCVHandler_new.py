@@ -58,7 +58,7 @@ class OpenCVHandler():
             # grab image
             image = frame.array
 
-            print( str(image.width), str(image.height) )
+            print( str(len(image)), str(len(image[0])) )
 
             # resize image (later?)
             # image = imutils.resize( image, width=min(400, image.shape[1] ))
