@@ -33,7 +33,7 @@ class OpenCVHandler(threading.Thread):
         self.num_detected = 0
 
         server_ip = '192.168.1.1'
-        this.pi_id = get_ID( server_ip )
+        self.pi_id = get_ID( server_ip )
 
     def background_subtraction( self, previous_frame, frame, min_area):
         frameDelta = cv2.absdiff( previous_frame, frame )
@@ -79,7 +79,7 @@ class OpenCVHandler(threading.Thread):
             # cv2.imshow("After NMS", image)
             # key = cv2.waitKey(1) & 0xFF
 
-            filename = "image_" + str(this.pi_id) + "_" + str(frame_num) + ".jpg"
+            filename = "image_" + str(self.pi_id) + "_" + str(frame_num) + ".jpg"
             cv2.imwrite(filename,image)
             # cv2.imwrite('image_processes.jpg',image_processes)
 
