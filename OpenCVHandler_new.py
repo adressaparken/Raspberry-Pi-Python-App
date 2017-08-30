@@ -90,6 +90,9 @@ class OpenCVHandler(threading.Thread):
 
             frame_num += 1
 
+            if (frame_num > 100):
+                break
+
             if (not self.running):
                 break
 
