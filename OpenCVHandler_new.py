@@ -28,7 +28,7 @@ class OpenCVHandler():
         # initialize the HOG descriptor/person detector
         self.hog = cv2.HOGDescriptor()
         self.hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
-        # self.fgbg = cv2.createBackgroundSubtractorMOG2()
+        self.fgbg = cv2.createBackgroundSubtractorMOG2()
 
         self.num_detected = 0
 
@@ -57,10 +57,10 @@ class OpenCVHandler():
             image = frame.array
             # image = imutils.resize( image, width=min(400, image.shape[1] ))
 
-            # image = self.fgbg.apply(image)
+            image_back = self.fgbg.apply(image)
 
             # detect people in the image
-            (rects, weights) = self.hog.detectMultiScale(image, winStride=(4, 4), padding=(8, 8), scale=1.05)
+            (rects, weights) = self.hog.detectMultiScale(image_back, winStride=(4, 4), padding=(8, 8), scale=1.05)
 
             # apply non-maxima suppression to the bounding boxes using a
             # fairly large overlap threshold to try to maintain overlapping
