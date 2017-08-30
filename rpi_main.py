@@ -65,14 +65,14 @@ pressure_osc = settings.set( "pressure_osc", True )
 # Pressure settings
 light_interval = settings.set( "light_interval", 5 )
 light_change = settings.set( "light_change", False )
-light_change_threshold = settings.set( "light_change_threshold", 1.0 )
+light_change_threshold = settings.set( "light_change_threshold", 1 )
 light_mqtt = settings.set( "light_mqtt", True )
 light_osc = settings.set( "light_osc", True )
 
 # Pedestrians settings
 pedestrians_interval = settings.set( "pedestrians_interval", 5 )
 pedestrians_change = settings.set( "pedestrians_change", False )
-pedestrians_change_threshold = settings.set( "pedestrians_change_threshold", 1.0 )
+pedestrians_change_threshold = settings.set( "pedestrians_change_threshold", 1 )
 pedestrians_mqtt = settings.set( "pedestrians_mqtt", True )
 pedestrians_osc = settings.set( "pedestrians_osc", False )
 
