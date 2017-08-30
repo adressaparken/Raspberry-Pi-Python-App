@@ -38,6 +38,6 @@ class SimpleUDPClient(UDPClient):
         else:
             values = value
         for val in values:
-            builder.add_arg(val)
+            builder.add_arg(val, type(val))
         msg = builder.build()
         self.send(msg)
