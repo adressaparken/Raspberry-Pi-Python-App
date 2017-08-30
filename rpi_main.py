@@ -174,10 +174,10 @@ def set_settings( s ):
 
     log_info( "Settings set: " + heartbeat_message )
     log_info( "OSC port                      - " + str( osc_port ) )
-    log_info( "Temperature interval/change/threshold/MQTT/OSC - " + str( temperature_interval ) + "/" + str( temperature_change ) + "/" + str( temperature_change_threshold ) ) + "/" + str( temperature_mqtt ) + "/" + str( temperature_osc ) )
-    log_info( "Pressure interval/change/threshold/MQTT/OSC    - " + str( pressure_interval ) + "/" + str( pressure_change ) + "/" + str( pressure_change_threshold ) ) + "/" + str( pressure_mqtt ) + "/" + str( pressure_osc ) )
-    log_info( "Light interval/change/threshold/MQTT/OSC       - " + str( light_interval ) + "/" + str( light_change ) + "/" + str( light_change_threshold ) ) + "/" + str( light_mqtt ) + "/" + str( light_osc ) )
-    log_info( "Pedestrians interval/change/threshold/MQTT/OSC - " + str( pedestrians_interval ) + "/" + str( pedestrians_change ) + "/" + str( pedestrians_change_threshold ) ) + "/" + str( pedestrians_mqtt ) + "/" + str( pedestrians_osc ) )
+    log_info( "Temperature interval/change/threshold/MQTT/OSC - " + str( temperature_interval ) + "/" + str( temperature_change ) + "/" + str( temperature_change_threshold ) + "/" + str( temperature_mqtt ) + "/" + str( temperature_osc ) )
+    log_info( "Pressure interval/change/threshold/MQTT/OSC    - " + str( pressure_interval ) + "/" + str( pressure_change ) + "/" + str( pressure_change_threshold ) + "/" + str( pressure_mqtt ) + "/" + str( pressure_osc ) )
+    log_info( "Light interval/change/threshold/MQTT/OSC       - " + str( light_interval ) + "/" + str( light_change ) + "/" + str( light_change_threshold ) + "/" + str( light_mqtt ) + "/" + str( light_osc ) )
+    log_info( "Pedestrians interval/change/threshold/MQTT/OSC - " + str( pedestrians_interval ) + "/" + str( pedestrians_change ) + "/" + str( pedestrians_change_threshold ) + "/" + str( pedestrians_mqtt ) + "/" + str( pedestrians_osc ) )
 
 ##-----------------------------------------------------------------------// Settings
 ##--------------------------------------------------------------------------------//
