@@ -54,8 +54,15 @@ class OpenCVHandler():
         frame_num = 0
 
         for frame in self.camera.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
+
+            # grab image
             image = frame.array
+
+            # resize image (later?)
             # image = imutils.resize( image, width=min(400, image.shape[1] ))
+
+            # crop image
+            image = image[ 0:480, 128:512  ]
 
             image_back = self.fgbg.apply(image)
 
