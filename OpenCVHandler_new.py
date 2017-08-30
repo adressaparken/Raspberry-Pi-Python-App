@@ -113,7 +113,8 @@ class OpenCVHandler():
 
 
 def signal_handler( signal , frame ):
-    global running
+    global running, opencv
+    opencv.stop_thread()
     running = False
 
 
