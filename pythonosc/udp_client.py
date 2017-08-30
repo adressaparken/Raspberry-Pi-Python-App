@@ -38,6 +38,11 @@ class SimpleUDPClient(UDPClient):
         else:
             values = value
         for val in values:
-            builder.add_arg(val, type(val))
+            if( type(val) is int ):
+                builder.add_arg(val, 'i')
+            elif( type(val) is float ):
+                builder.add_arg(val, 'f')
+            else:
+                builder.add_arg(val)
         msg = builder.build()
         self.send(msg)
