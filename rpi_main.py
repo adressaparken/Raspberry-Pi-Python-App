@@ -295,7 +295,7 @@ def sensor_loop():
                 mqtt_client.publish_message( temperature_mqtt_topic, t )
 
             if ( temperature_osc ):
-                osc_handler.send_message( temperature_osc_address, str( t ) )
+                osc_handler.send_float( temperature_osc_address, str( t ) )
 
             temperature = (t, current_time + temperature_interval * 1000)
 

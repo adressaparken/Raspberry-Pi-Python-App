@@ -38,11 +38,30 @@ class SimpleUDPClient(UDPClient):
         else:
             values = value
         for val in values:
-            if( type(val) is int ):
-                builder.add_arg(val, 'i')
-            elif( type(val) is float ):
-                builder.add_arg(val, 'f')
-            else:
-                builder.add_arg(val)
+            builder.add_arg(val)
+        msg = builder.build()
+        self.send(msg)
+
+    def send_integer(self, address, value):
+        """Compose an OSC message and send it."""
+        builder = OscMessageBuilder(address=address)
+        if not isinstance(value, Iterable) or isinstance(value, (str, bytes)):
+            values = [value]
+        else:
+            values = value
+        for val in values:
+            builder.add_arg(val, 'i')
+        msg = builder.build()
+        self.send(msg)
+
+    def senf_float(self, address, value):
+        """Compose an OSC message and send it."""
+        builder = OscMessageBuilder(address=address)
+        if not isinstance(value, Iterable) or isinstance(value, (str, bytes)):
+            values = [value]
+        else:
+            values = value
+        for val in values:
+            builder.add_arg(val, 'f')
         msg = builder.build()
         self.send(msg)
