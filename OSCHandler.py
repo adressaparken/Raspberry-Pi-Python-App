@@ -22,12 +22,6 @@ class OSCHandler():
     def send_message( self, address, msg ):
         self.client.send_message( address, msg )
 
-    def send_integer( self, address, msg ):
-        self.client.send_integer( address, msg )
-
-    def send_float( self, address, msg ):
-        self.client.send_float( address, msg )
-
 
 if __name__ == '__main__':
 

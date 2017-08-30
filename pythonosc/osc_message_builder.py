@@ -96,7 +96,6 @@ class OscMessageBuilder(object):
     elif isinstance(arg_value, bytes):
       arg_type = self.ARG_TYPE_BLOB
     elif isinstance(arg_value, int):
-      print( 'FUUUUCK' )
       arg_type = self.ARG_TYPE_INT
     elif isinstance(arg_value, float):
       arg_type = self.ARG_TYPE_FLOAT
