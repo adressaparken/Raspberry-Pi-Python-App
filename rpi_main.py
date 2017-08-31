@@ -49,6 +49,7 @@ osc_port = settings.set( "osc_port", 5005 )
 heartbeat_interval = settings.set( "heartbeat_interval", 10 )
 
 # Temperature settings
+temperature_on_interval = settings.set( "temperature_on_interval", True )
 temperature_interval = settings.set( "temperature_interval", 5 )
 temperature_change = settings.set( "temperature_change", False )
 temperature_change_threshold = settings.set( "temperature_change_threshold", 1.0 )
@@ -56,6 +57,7 @@ temperature_mqtt = settings.set( "temperature_mqtt", True )
 temperature_osc = settings.set( "temperature_osc", True )
 
 # Pressure settings
+pressure_on_interval = settings.set( "pressure_on_interval", True )
 pressure_interval = settings.set( "pressure_interval", 5 )
 pressure_change = settings.set( "pressure_change", False )
 pressure_change_threshold = settings.set( "pressure_change_threshold", 1.0 )
@@ -63,6 +65,7 @@ pressure_mqtt = settings.set( "pressure_mqtt", True )
 pressure_osc = settings.set( "pressure_osc", True )
 
 # Pressure settings
+light_on_interval = settings.set( "light_on_interval", True )
 light_interval = settings.set( "light_interval", 5 )
 light_change = settings.set( "light_change", False )
 light_change_threshold = settings.set( "light_change_threshold", 1 )
@@ -70,6 +73,7 @@ light_mqtt = settings.set( "light_mqtt", True )
 light_osc = settings.set( "light_osc", True )
 
 # Pedestrians settings
+pedestrians_on_interval = settings.set( "pedestrians_on_interval", True )
 pedestrians_interval = settings.set( "pedestrians_interval", 5 )
 pedestrians_change = settings.set( "pedestrians_change", False )
 pedestrians_change_threshold = settings.set( "pedestrians_change_threshold", 1 )
@@ -84,10 +88,10 @@ pedestrians = ( 0, current_milli_time() )
 
 # Heartbeat_message - including all settings
 heartbeat_message = str( osc_port )
-heartbeat_message += ',' + str( temperature_interval ) + ',' + str( int(temperature_change) ) + ',' + str( int(temperature_change_threshold) ) + ',' + str( int(temperature_mqtt) ) + ',' + str( int(temperature_osc) )
-heartbeat_message += ',' + str( pressure_interval ) + ',' + str( int(pressure_change) ) + ',' + str( int(pressure_change_threshold) ) + ',' + str( int(pressure_mqtt) ) + ',' + str( int(pressure_osc) )
-heartbeat_message += ',' + str( light_interval ) + ',' + str( int(light_change) ) + ',' + str( int(light_change_threshold) ) + ',' + str( int(light_mqtt) ) + ',' + str( int(light_osc) )
-heartbeat_message += ',' + str( pedestrians_interval ) + ',' + str( int(pedestrians_change) ) + ',' + str( int(pedestrians_change_threshold) ) + ',' + str( int(pedestrians_mqtt) ) + ',' + str( int(pedestrians_osc) )
+heartbeat_message += ',' + str( temperature_on_interval ) + ',' + str( temperature_interval ) + ',' + str( int(temperature_change) ) + ',' + str( int(temperature_change_threshold) ) + ',' + str( int(temperature_mqtt) ) + ',' + str( int(temperature_osc) )
+heartbeat_message += ',' + str( pressure_on_interval ) + ',' + str( pressure_interval ) + ',' + str( int(pressure_change) ) + ',' + str( int(pressure_change_threshold) ) + ',' + str( int(pressure_mqtt) ) + ',' + str( int(pressure_osc) )
+heartbeat_message += ',' + str( light_on_interval ) + ',' + str( light_interval ) + ',' + str( int(light_change) ) + ',' + str( int(light_change_threshold) ) + ',' + str( int(light_mqtt) ) + ',' + str( int(light_osc) )
+heartbeat_message += ',' + str( pedestrians_on_interval ) + ',' + str( pedestrians_interval ) + ',' + str( int(pedestrians_change) ) + ',' + str( int(pedestrians_change_threshold) ) + ',' + str( int(pedestrians_mqtt) ) + ',' + str( int(pedestrians_osc) )
 
 # MQTT topics
 global_mqtt_topic = 'parken/rpi/' + str(pi_id)
@@ -119,10 +123,10 @@ pedestrians_osc_address = global_osc_address + '/pedestrians'
 def set_settings( s ):
     global heartbeat_message
     global osc_port
-    global temperature_interval, temperature_change, temperature_change_threshold, temperature_mqtt, temperature_osc
-    global pressure_interval, pressure_change, pressure_change_threshold, pressure_mqtt, pressure_osc
-    global light_interval, light_change, light_change_threshold, light_mqtt, light_osc
-    global pedestrians_interval, pedestrians_change, pedestrians_change_threshold, pedestrians_mqtt, pedestrians_osc
+    global temperature_on_interval, temperature_interval, temperature_change, temperature_change_threshold, temperature_mqtt, temperature_osc
+    global pressure_on_interval, pressure_interval, pressure_change, pressure_change_threshold, pressure_mqtt, pressure_osc
+    global light_on_interval, light_interval, light_change, light_change_threshold, light_mqtt, light_osc
+    global pedestrians_on_interval, pedestrians_interval, pedestrians_change, pedestrians_change_threshold, pedestrians_mqtt, pedestrians_osc
 
     s = s.split(',')
 
@@ -130,32 +134,36 @@ def set_settings( s ):
     osc_port = settings.store( "osc_port", int(s[0]) )
 
     # Temperature
-    temperature_interval = settings.store( "temperature_interval", int(s[1]) )
-    temperature_change = settings.store( "temperature_change", bool(int(s[2])) )
-    temperature_change_threshold = settings.store( "temperature_change_threshold", float(s[3]) )
-    temperature_mqtt = settings.store( "temperature_mqtt", bool(int(s[4])) )
-    temperature_osc = settings.store( "temperature_osc", bool(int(s[5])) )
+    temperature_on_interval = settings.store( "temperature_on_interval", bool(int(s[1])) )
+    temperature_interval = settings.store( "temperature_interval", int(s[2]) )
+    temperature_change = settings.store( "temperature_change", bool(int(s[3])) )
+    temperature_change_threshold = settings.store( "temperature_change_threshold", float(s[4]) )
+    temperature_mqtt = settings.store( "temperature_mqtt", bool(int(s[5])) )
+    temperature_osc = settings.store( "temperature_osc", bool(int(s[6])) )
 
     # Pressure
-    pressure_interval = settings.store( "pressure_interval", int(s[6]) )
-    pressure_change = settings.store( "pressure_change", bool(int(s[7])) )
-    pressure_change_threshold = settings.store( "pressure_change_threshold", float(s[8]) )
-    pressure_mqtt = settings.store( "pressure_mqtt", bool(int(s[9])) )
-    pressure_osc = settings.store( "pressure_osc", bool(int(s[10])) )
+    pressure_on_interval = settings.store( "pressure_on_interval", bool(int(s[7])) )
+    pressure_interval = settings.store( "pressure_interval", int(s[8]) )
+    pressure_change = settings.store( "pressure_change", bool(int(s[9])) )
+    pressure_change_threshold = settings.store( "pressure_change_threshold", float(s[10]) )
+    pressure_mqtt = settings.store( "pressure_mqtt", bool(int(s[11])) )
+    pressure_osc = settings.store( "pressure_osc", bool(int(s[12])) )
 
     # Light
-    light_interval = settings.store( "light_interval", int(s[11]) )
-    light_change = settings.store( "light_change", bool(int(s[12])) )
-    light_change_threshold = settings.store( "light_change_threshold", float(s[13]) )
-    light_mqtt = settings.store( "light_mqtt", bool(int(s[14])) )
-    light_osc = settings.store( "light_osc", bool(int(s[15])) )
+    light_on_interval = settings.store( "light_on_interval", bool(int(s[13])) )
+    light_interval = settings.store( "light_interval", int(s[14]) )
+    light_change = settings.store( "light_change", bool(int(s[15])) )
+    light_change_threshold = settings.store( "light_change_threshold", float(s[16]) )
+    light_mqtt = settings.store( "light_mqtt", bool(int(s[17])) )
+    light_osc = settings.store( "light_osc", bool(int(s[18])) )
 
     # Pedestrians
-    pedestrians_interval = settings.store( "pedestrians_interval", int(s[16]) )
-    pedestrians_change = settings.store( "pedestrians_change", bool(int(s[17])) )
-    pedestrians_change_threshold = settings.store( "pedestrians_change_threshold", float(s[18]) )
-    pedestrians_mqtt = settings.store( "pedestrians_mqtt", bool(int(s[19])) )
-    pedestrians_osc = settings.store( "pedestrians_osc", bool(int(s[20])) )
+    pedestrians_on_interval = settings.store( "pedestrians_on_interval", bool(int(s[19])) )
+    pedestrians_interval = settings.store( "pedestrians_interval", int(s[20]) )
+    pedestrians_change = settings.store( "pedestrians_change", bool(int(s[21])) )
+    pedestrians_change_threshold = settings.store( "pedestrians_change_threshold", float(s[22]) )
+    pedestrians_mqtt = settings.store( "pedestrians_mqtt", bool(int(s[23])) )
+    pedestrians_osc = settings.store( "pedestrians_osc", bool(int(s[24])) )
 
     # averaged values also (over a day?)
     # add sound stuff (amplitude, etc.)
@@ -165,10 +173,10 @@ def set_settings( s ):
     # add text when pressing send that it's being updated...
 
     heartbeat_message = str( osc_port )
-    heartbeat_message += ',' + str( temperature_interval ) + ',' + str( int(temperature_change) ) + ',' + str( int(temperature_change_threshold) ) + ',' + str( int(temperature_mqtt) ) + ',' + str( int(temperature_osc) )
-    heartbeat_message += ',' + str( pressure_interval ) + ',' + str( int(pressure_change) ) + ',' + str( int(pressure_change_threshold) ) + ',' + str( int(pressure_mqtt) ) + ',' + str( int(pressure_osc) )
-    heartbeat_message += ',' + str( light_interval ) + ',' + str( int(light_change) ) + ',' + str( int(light_change_threshold) ) + ',' + str( int(light_mqtt) ) + ',' + str( int(light_osc) )
-    heartbeat_message += ',' + str( pedestrians_interval ) + ',' + str( int(pedestrians_change) ) + ',' + str( int(pedestrians_change_threshold) ) + ',' + str( int(pedestrians_mqtt) ) + ',' + str( int(pedestrians_osc) )
+    heartbeat_message += ',' + str( temperature_on_interval ) + ',' + str( temperature_interval ) + ',' + str( int(temperature_change) ) + ',' + str( int(temperature_change_threshold) ) + ',' + str( int(temperature_mqtt) ) + ',' + str( int(temperature_osc) )
+    heartbeat_message += ',' + str( pressure_on_interval ) + ',' + str( pressure_interval ) + ',' + str( int(pressure_change) ) + ',' + str( int(pressure_change_threshold) ) + ',' + str( int(pressure_mqtt) ) + ',' + str( int(pressure_osc) )
+    heartbeat_message += ',' + str( light_on_interval ) + ',' + str( light_interval ) + ',' + str( int(light_change) ) + ',' + str( int(light_change_threshold) ) + ',' + str( int(light_mqtt) ) + ',' + str( int(light_osc) )
+    heartbeat_message += ',' + str( pedestrians_on_interval ) + ',' + str( pedestrians_interval ) + ',' + str( int(pedestrians_change) ) + ',' + str( int(pedestrians_change_threshold) ) + ',' + str( int(pedestrians_mqtt) ) + ',' + str( int(pedestrians_osc) )
 
     mqtt_client.publish_message( heartbeat_topic, heartbeat_message )
 
@@ -246,10 +254,13 @@ def sensor_loop():
         t = get_temperature()
         send = False
         # if temperature changed or timer has passed, send
-        if( temperature_change ):
+        if ( temperature_on_interval and temperature_change ):
+            if ( check_changed( temperature[0], t, temperature_change_threshold ) or current_time >= temperature[1] ):
+                send = True
+        elif( temperature_change ):
             if( check_changed( temperature[0], t, temperature_change_threshold ) ):
                 send = True
-        else:
+        elif( temperature_on_interval ):
             if ( current_time >= temperature[1] ):
                 send = True
 
@@ -266,10 +277,13 @@ def sensor_loop():
         p = get_pressure()
         send = False
         # if pressure changed or timer has passed, send
-        if( pressure_change ):
+        if ( pressure_on_interval and pressure_change ):
+            if ( check_changed( pressure[0], p, pressure_change_threshold ) or current_time >= pressure[1] ):
+                send = True
+        elif( pressure_change ):
             if( check_changed( pressure[0], p, pressure_change_threshold ) ):
                 send = True
-        else:
+        elif( pressure_on_interval ):
             if ( current_time >= pressure[1] ):
                 send = True
 
@@ -286,10 +300,13 @@ def sensor_loop():
         l = get_light()
         send = False
         # if light changed or timer has passed, send
-        if( light_change ):
+        if ( light_on_interval and light_change ):
+            if ( check_changed( light[0], l, light_change_threshold ) or current_time >= light[1] ):
+                send = True
+        elif( light_change ):
             if( check_changed( light[0], l, light_change_threshold ) ):
                 send = True
-        else:
+        elif( light_on_interval ):
             if ( current_time >= light[1] ):
                 send = True
 
@@ -306,10 +323,13 @@ def sensor_loop():
         pe = get_pedestrians()
         send = False
         # if pedestrians changed or timer has passed, send
-        if( pedestrians_change ):
+        if ( pedestrians_on_interval and pedestrians_change ):
+            if ( check_changed( pedestrians[0], pe, pedestrians_change_threshold ) or current_time >= pedestrians[1] ):
+                send = True
+        elif( pedestrians_change ):
             if( check_changed( pedestrians[0], pe, pedestrians_change_threshold ) ):
                 send = True
-        else:
+        elif( pedestrians_on_interval ):
             if ( current_time >= pedestrians[1] ):
                 send = True
 
