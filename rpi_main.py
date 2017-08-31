@@ -173,10 +173,10 @@ def set_settings( s ):
     # add text when pressing send that it's being updated...
 
     heartbeat_message = str( osc_port )
-    heartbeat_message += ',' + str( temperature_on_interval ) + ',' + str( temperature_interval ) + ',' + str( int(temperature_change) ) + ',' + str( int(temperature_change_threshold) ) + ',' + str( int(temperature_mqtt) ) + ',' + str( int(temperature_osc) )
-    heartbeat_message += ',' + str( pressure_on_interval ) + ',' + str( pressure_interval ) + ',' + str( int(pressure_change) ) + ',' + str( int(pressure_change_threshold) ) + ',' + str( int(pressure_mqtt) ) + ',' + str( int(pressure_osc) )
-    heartbeat_message += ',' + str( light_on_interval ) + ',' + str( light_interval ) + ',' + str( int(light_change) ) + ',' + str( int(light_change_threshold) ) + ',' + str( int(light_mqtt) ) + ',' + str( int(light_osc) )
-    heartbeat_message += ',' + str( pedestrians_on_interval ) + ',' + str( pedestrians_interval ) + ',' + str( int(pedestrians_change) ) + ',' + str( int(pedestrians_change_threshold) ) + ',' + str( int(pedestrians_mqtt) ) + ',' + str( int(pedestrians_osc) )
+    heartbeat_message += ',' + str( int(temperature_on_interval) ) + ',' + str( temperature_interval ) + ',' + str( int(temperature_change) ) + ',' + str( int(temperature_change_threshold) ) + ',' + str( int(temperature_mqtt) ) + ',' + str( int(temperature_osc) )
+    heartbeat_message += ',' + str( int(pressure_on_interval) ) + ',' + str( pressure_interval ) + ',' + str( int(pressure_change) ) + ',' + str( int(pressure_change_threshold) ) + ',' + str( int(pressure_mqtt) ) + ',' + str( int(pressure_osc) )
+    heartbeat_message += ',' + str( int(light_on_interval) ) + ',' + str( light_interval ) + ',' + str( int(light_change) ) + ',' + str( int(light_change_threshold) ) + ',' + str( int(light_mqtt) ) + ',' + str( int(light_osc) )
+    heartbeat_message += ',' + str( int(pedestrians_on_interval) ) + ',' + str( pedestrians_interval ) + ',' + str( int(pedestrians_change) ) + ',' + str( int(pedestrians_change_threshold) ) + ',' + str( int(pedestrians_mqtt) ) + ',' + str( int(pedestrians_osc) )
 
     mqtt_client.publish_message( heartbeat_topic, heartbeat_message )
 
