@@ -23,6 +23,8 @@ class OpenCVHandler():
         self.camera = PiCamera()
         self.camera.resolution = (res_w, res_h)
         self.camera.framerate = framerate
+        self.camera.brightness = 70
+        self.camera.ISO = 400
         self.rawCapture = PiRGBArray(self.camera, size=(res_w, res_h))
 
         # initialize the HOG descriptor/person detector
