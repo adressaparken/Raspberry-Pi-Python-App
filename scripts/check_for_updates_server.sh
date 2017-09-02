@@ -84,7 +84,7 @@ while true; do
     ##  Stop native app if update is required  #############
 
     if [ $UPDATE = true ]; then
-        sh $SCRIPT_DIR/pull_git_native.sh
+        /bin/bash $SCRIPT_DIR/pull_git_native.sh
     fi
 
 
