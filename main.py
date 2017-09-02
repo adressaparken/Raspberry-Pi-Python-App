@@ -341,7 +341,7 @@ if __name__ == '__main__':
 
     # -----------------------------------------------/
     # ---/ Initialise OpenCV thread
-    opencv = OpenCVHandler( 640, 480, 32 )
+    opencv = OpenCVHandler(640, 480, 32, log_level)
     opencv.start()
 
     # -----------------------------------------------/
