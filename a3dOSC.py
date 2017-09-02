@@ -8,16 +8,18 @@ import signal
 import time
 import random
 import socket
-
 from pythonosc import osc_message_builder
 from pythonosc import udp_client
-
-from my_logging import *
+from a3dLogger import a3dLogger
 
 class OSCHandler():
 
-    def __init__( self, ip, port ):
-        self.client = udp_client.SimpleUDPClient( ip, port )
+    def __init__(self, ip, port, log_level):
+
+        self.logger = a3dLogger()
+        self.logger.set_level(log_level)
+
+        self.client = udp_client.SimpleUDPClient(ip, port)
 
     def send_message( self, address, msg ):
         self.client.send_message( address, msg )
@@ -36,5 +38,5 @@ if __name__ == '__main__':
         time.sleep(1)
 
     # cleanup
-    log_info( 'Closing program!' )
+    print( 'Closing program!' )
     sys.exit(0)

@@ -64,7 +64,7 @@ class OpenCVHandler():
             # image = imutils.resize( image, width=min(400, image.shape[1] ))
 
             # crop image
-            image = image[ 0:480, 128:512  ]
+            image = image[0:480, 128:512]
 
             image_back = self.fgbg.apply(image)
 
@@ -131,7 +131,7 @@ if __name__ == '__main__':
     opencv.run()
 
     # cleanup
-    log_info( 'Closing program!' )
+    print( 'Closing program!' )
     opencv.stop_thread()
     opencv.join()
     sys.exit(0)

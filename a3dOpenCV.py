@@ -14,11 +14,11 @@ from utils import *
 from imutils.object_detection import non_max_suppression
 from picamera.array import PiRGBArray
 from picamera import PiCamera
-from my_logging import *
+from a3dLogger import a3dLogger
 
 class OpenCVHandler(threading.Thread):
 
-    def __init__( self, res_w, res_h, framerate ):
+    def __init__(self, res_w, res_h, framerate, log_level):
         threading.Thread.__init__(self)
         self.camera = PiCamera()
         self.camera.resolution = (res_w, res_h)
@@ -29,9 +29,14 @@ class OpenCVHandler(threading.Thread):
         self.hog = cv2.HOGDescriptor()
         self.hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
+        self.fgbg = cv2.createBackgroundSubtractorMOG2()
+
         self.num_detected_old = (0,0,0)
         self.num_detected = 0
         self.lock = threading.Lock()
+
+        self.logger = a3dLogger()
+        self.logger.set_level(log_level)
 
     def background_subtraction( self, previous_frame, frame, min_area):
         frameDelta = cv2.absdiff( previous_frame, frame )
@@ -54,8 +59,14 @@ class OpenCVHandler(threading.Thread):
         for frame in self.camera.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
             image = frame.array
 
+            # crop image
+            image = image[0:480, 128:512]
+
+            # background substraction
+            image_back = self.fgbg.apply(image)
+
             # detect people in the image
-            (rects, weights) = self.hog.detectMultiScale(image, winStride=(4, 4), padding=(8, 8), scale=1.05)
+            (rects, weights) = self.hog.detectMultiScale(image_back, winStride=(4, 4), padding=(8, 8), scale=1.05)
 
             # apply non-maxima suppression to the bounding boxes using a
             # fairly large overlap threshold to try to maintain overlapping
@@ -125,7 +136,7 @@ if __name__ == '__main__':
         time.sleep( 1 )
 
     # cleanup
-    log_info( 'Closing program!' )
+    print( 'Closing program!' )
     opencv.stop_thread()
     opencv.join()
     sys.exit(0)
