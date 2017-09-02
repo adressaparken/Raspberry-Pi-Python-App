@@ -25,7 +25,7 @@ ID=${IP_ARR[3]}
 ##  Stop native app  #######################################
 
 function stop_native_app {
-    mosquitto_pub -t "parken/rpi/$ID/quit" -m 0
+    mosquitto_pub -h 192.168.1.1 -t "parken/rpi/$ID/quit" -m 0
 }
 
 
