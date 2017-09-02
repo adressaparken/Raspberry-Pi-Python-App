@@ -15,6 +15,7 @@ from a3dLogger import a3dLogger
 from a3dSettings import SettingsHandler
 from a3dMQTT import MQTTHandler
 from a3dOSC import OSCHandler
+from a3dOpenCV import OpenCVHandler
 
 
 # ============================================================================//
