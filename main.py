@@ -45,14 +45,10 @@ else:
 # ============================================================================//
 # -----------------------------------------------------------// Global variables
 
-# server_ip = '192.168.1.1'                   # IP address of the Ubuntu server # TODO change!!!
-# broadcast_address = '192.168.255.255'       # Network broadcasting address
+server_ip = '192.168.1.1'                   # IP address of the Ubuntu server
+broadcast_address = '192.168.255.255'       # Network broadcasting address
 
-server_ip = '192.168.1.12'                  # IP address of the Ubuntu server
-broadcast_address = '192.168.1.255'         # Network broadcasting address
-
-# pi_id = get_ID( server_ip )                 # ID of the RPi - LSB of IP address
-pi_id = 1                                                                       # TODO change!!!
+pi_id = get_ID( server_ip )                 # ID of the RPi - LSB of IP address
 
 mqtt_broker = server_ip                     # IP address of MQTT Broker
 mqtt_port = 1883                            # Port used for MQTT
