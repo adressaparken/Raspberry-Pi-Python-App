@@ -151,7 +151,7 @@ def check_changed( old_val, val, threshold ):
 #------------------------------------------/
 #---/ sensor loop
 def sensor_loop():
-    global running, mqtt_client#, osc_handler, opencv
+    global running, mqtt_client, osc_handler, opencv
     global settings
 
     while ( running ):
@@ -218,7 +218,6 @@ def set_settings(mosq, obj, msg):
 
     sensors = settings.store("settings", sensors)
 
-    # TODO build and send heartbeat and reset heartbeat timer
     build_heartbeat_message()
     send_heartbeat_message()
 
@@ -341,8 +340,8 @@ if __name__ == '__main__':
 
     # -----------------------------------------------/
     # ---/ Initialise OpenCV thread
-    # opencv = OpenCVHandler( 640, 480, 32 )
-    # opencv.start()
+    opencv = OpenCVHandler( 640, 480, 32 )
+    opencv.start()
 
     # -----------------------------------------------/
     # ---/ Initialise sensor thread
