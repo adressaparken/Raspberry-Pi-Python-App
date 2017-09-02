@@ -362,6 +362,11 @@ if __name__ == '__main__':
 
     # -----------------------------------------------/
     # ---/ Cleanup
+    opencv.stop_thread()
+    opencv.join()
+    heartbeat_thread.join()
+    sensor_thread.join()
+    mqtt_client.stop()
     logger.info('Closing program!')
     sys.exit( 0 )
 
