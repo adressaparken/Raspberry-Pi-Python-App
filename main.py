@@ -46,7 +46,7 @@ else:
 # ============================================================================//
 # -----------------------------------------------------------// Global variables
 
-version = "1.0.1"
+version = "1.0.2"
 
 server_ip = '192.168.1.1'                   # IP address of the Ubuntu server
 broadcast_address = '192.168.255.255'       # Network broadcasting address
