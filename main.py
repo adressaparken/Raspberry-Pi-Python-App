@@ -45,6 +45,8 @@ else:
 # ============================================================================//
 # -----------------------------------------------------------// Global variables
 
+version = "1.0.0"
+
 server_ip = '192.168.1.1'                   # IP address of the Ubuntu server
 broadcast_address = '192.168.255.255'       # Network broadcasting address
 
@@ -115,26 +117,22 @@ class Sensor():
 #------------------------------------------/
 #---/ get temperature
 def get_temperature():
-    return 1
-    # return round( envirophat_weather.temperature(), 1)
+    return round( envirophat_weather.temperature(), 1)
 
 #------------------------------------------/
 #---/ get pressure
 def get_pressure():
-    return 1
-    # return round( envirophat_weather.pressure(), 1)
+    return round( envirophat_weather.pressure(), 1)
 
 #------------------------------------------/
 #---/ get pressure
 def get_light():
-    return 1
-    # return round( envirophat_light.light(), 1)
+    return round( envirophat_light.light(), 1)
 
 #------------------------------------------/
 #---/ get pressure
 def get_pedestrians():
-    return 1
-    # return opencv.get_num_detected()
+    return opencv.get_num_detected()
 
 #------------------------------------------/
 #---/ Define sensors list
@@ -254,6 +252,7 @@ def send_heartbeat_message():
     next_heartbeat += heartbeat_interval * 1000
     mqtt_client.publish_message( heartbeat_topic, heartbeat_message )
     logger.debug( "Heartbeat message: " + heartbeat_message )
+    mqtt_client.publish_message( version_topic, version )
 
 #------------------------------------------/
 #---/ send heartbeat
@@ -290,6 +289,7 @@ def signal_handler(signal, frame):
 # -----------------------------------------------/
 # ---/ MQTT topics
 global_mqtt_topic = 'parken/rpi/' + str(pi_id)
+version_topic = global_mqtt_topic + '/version'
 quit_topic = global_mqtt_topic + '/quit'
 heartbeat_topic = global_mqtt_topic + '/heartbeat'
 settings_topic = global_mqtt_topic + '/settings'
