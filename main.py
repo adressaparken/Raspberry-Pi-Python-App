@@ -316,59 +316,66 @@ global_osc_address = '/rpi/' + str(pi_id)
 
 if __name__ == '__main__':
 
-    logger.info("Raspberry Pi node with ID " + str(pi_id) + " starting...")
+    try:
 
-    # -----------------------------------------------/
-    # ---/ Register signal handler for Ctrl+C
-    signal.signal(signal.SIGINT, signal_handler)
+        logger.info("Raspberry Pi node with ID " + str(pi_id) + " starting...")
 
-    # -----------------------------------------------/
-    # ---/ Initialise MQTT thread
-    q = Queue()
-    mqtt_client = MQTTHandler(q, mqtt_broker, mqtt_port, log_level)
-    mqtt_client.start()
-    mqtt_client.subscribe(quit_topic)
-    mqtt_client.subscribe(settings_topic, set_settings)
+        # -----------------------------------------------/
+        # ---/ Register signal handler for Ctrl+C
+        signal.signal(signal.SIGINT, signal_handler)
 
-    # -----------------------------------------------/
-    # ---/ Initialise OSC handler
-    osc_handler = OSCHandler(broadcast_address, osc_port, log_level)
+        # -----------------------------------------------/
+        # ---/ Initialise MQTT thread
+        q = Queue()
+        mqtt_client = MQTTHandler(q, mqtt_broker, mqtt_port, log_level)
+        mqtt_client.start()
+        mqtt_client.subscribe(quit_topic)
+        mqtt_client.subscribe(settings_topic, set_settings)
 
-    # -----------------------------------------------/
-    # ---/ Initialise heartbeat thread
-    heartbeat_thread = threading.Thread(target=hearbeat)
-    heartbeat_thread.start()
+        # -----------------------------------------------/
+        # ---/ Initialise OSC handler
+        osc_handler = OSCHandler(broadcast_address, osc_port, log_level)
 
-    # -----------------------------------------------/
-    # ---/ Initialise OpenCV thread
-    opencv = OpenCVHandler(640, 480, 32, log_level)
-    opencv.start()
+        # -----------------------------------------------/
+        # ---/ Initialise heartbeat thread
+        heartbeat_thread = threading.Thread(target=hearbeat)
+        heartbeat_thread.start()
 
-    # -----------------------------------------------/
-    # ---/ Initialise sensor thread
-    sensor_thread = threading.Thread(target=sensor_loop)
-    sensor_thread.start()
+        # -----------------------------------------------/
+        # ---/ Initialise OpenCV thread
+        opencv = OpenCVHandler(640, 480, 32, log_level)
+        opencv.start()
+
+        # -----------------------------------------------/
+        # ---/ Initialise sensor thread
+        sensor_thread = threading.Thread(target=sensor_loop)
+        sensor_thread.start()
 
 
-    # -----------------------------------------------/
-    # ---/ Main program loop
-    while (running):
-        if (not q.empty()):
-            topic, msg = q.get()
-            logger.info("MQTT msg received: %s - %s" % (topic, msg.decode()))
-            if(topic == quit_topic):           # TODO change to mqtt_client.sub_matches_topic(topic, settings_topic)
-                running = False
-        time.sleep( 0.1 )
+        # -----------------------------------------------/
+        # ---/ Main program loop
+        while (running):
+            if (not q.empty()):
+                topic, msg = q.get()
+                logger.info("MQTT msg received: %s - %s" % (topic, msg.decode()))
+                if(topic == quit_topic):           # TODO change to mqtt_client.sub_matches_topic(topic, settings_topic)
+                    running = False
+            time.sleep( 0.1 )
 
-    # -----------------------------------------------/
-    # ---/ Cleanup
-    opencv.stop_thread()
-    opencv.join()
-    heartbeat_thread.join()
-    sensor_thread.join()
-    mqtt_client.stop()
-    logger.info('Closing program!')
-    sys.exit( 0 )
+    except Exception as e:
+        logger.error(traceback.format_exception(*sys.exc_info()))
+
+    finally:
+
+        # -----------------------------------------------/
+        # ---/ Cleanup
+        opencv.stop_thread()
+        opencv.join()
+        heartbeat_thread.join()
+        sensor_thread.join()
+        mqtt_client.stop()
+        logger.info('Closing program!')
+        sys.exit( 0 )
 
 # ---------------------------------------------------------// Main program logic
 # ----------------------------------------------------------------------------//
