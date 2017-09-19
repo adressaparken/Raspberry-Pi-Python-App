@@ -183,7 +183,7 @@ def sensor_loop():
                 sensor.value = v
                 sensor.timestamp = current_time + sensor.interval * 1000
 
-                time.wait(0.07)
+                time.sleep(0.07)
 
 # --------------------------------------------------------------------// Sensors
 # ----------------------------------------------------------------------------//
