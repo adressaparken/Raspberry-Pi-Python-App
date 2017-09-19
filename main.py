@@ -46,7 +46,7 @@ else:
 # ============================================================================//
 # -----------------------------------------------------------// Global variables
 
-version = "1.0.3"
+version = "1.0.4"
 
 server_ip = '192.168.1.1'                   # IP address of the Ubuntu server
 broadcast_address = '192.168.255.255'       # Network broadcasting address
@@ -207,14 +207,26 @@ def set_settings(mosq, obj, msg):
     s = str(msg.payload.decode()).split(',')
 
     # OSC port
-    osc_port = settings.store("osc_port", int(s[0]))
+    try:
+        v = int(s[0])
+    except ValueError:
+        v = osc_port
+    osc_port = settings.store("osc_port", v)
 
     i = 1
     for sensor in sensors:
         sensor.on_interval = bool(int(s[i]))
-        sensor.interval = int(s[i+1])
+        try:
+            v = int(s[i+1])
+        except ValueError:
+            v = sensor.interval
+        sensor.interval = v
         sensor.on_change = bool(int(s[i+2]))
-        sensor.change_threshold = float(s[i+3])
+        try:
+            v = float(s[i+3])
+        except ValueError:
+            v = sensor.change_threshold
+        sensor.change_threshold = v
         sensor.broadcast_mqtt = bool(int(s[i+4]))
         sensor.broadcast_osc = bool(int(s[i+5]))
         i += 6
