@@ -15,7 +15,8 @@ This application is built for python3.
 
 * Python3
 * enviro-phat - https://github.com/pimoroni/enviro-phat
-* openCV 3
+* openCV 3 - https://github.com/opencv/opencv
+* paho-mqtt - https://pypi.python.org/pypi/paho-mqtt/1.3.0
 
 ### Who do I talk to? ###
 
